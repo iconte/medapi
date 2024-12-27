@@ -16,26 +16,26 @@ import br.com.icc.medapi.repository.CategoriaExameRepository;
 @Service
 public class CategoriaExameService {
 
-	private final CategoriaExameRepository repo;
-	private ModelMapper mapper;
+  private final CategoriaExameRepository repo;
+  private ModelMapper mapper;
 
-	public CategoriaExameService(CategoriaExameRepository repository, ModelMapper mapper) {
-		this.repo = repository;
-		this.mapper = mapper;
-	}
+  public CategoriaExameService(CategoriaExameRepository repository, ModelMapper mapper) {
+    this.repo = repository;
+    this.mapper = mapper;
+  }
 
-	public Page<CategoriaExameDTO> listarTodos(int number, int size) {
-		PageRequest req = PageRequest.of(number, size);
-		Page<CategoriaExame> page = repo.findAll(req);
-		return converterPageExameParaDTO(page);
+  public Page<CategoriaExameDTO> listarTodos(int number, int size) {
+    PageRequest req = PageRequest.of(number, size);
+    Page<CategoriaExame> page = repo.findAll(req);
+    return converterPageExameParaDTO(page);
 
-	}
+  }
 
-	public Page<CategoriaExameDTO> converterPageExameParaDTO(Page<CategoriaExame> pageExame) {
-		List<CategoriaExameDTO> exameDTOS = pageExame.getContent().stream()
-				.map(exame -> mapper.map(pageExame, CategoriaExameDTO.class)).collect(Collectors.toList());
+  public Page<CategoriaExameDTO> converterPageExameParaDTO(Page<CategoriaExame> pageExame) {
+    List<CategoriaExameDTO> exameDTOS = pageExame.getContent().stream()
+        .map(exame -> mapper.map(pageExame, CategoriaExameDTO.class)).collect(Collectors.toList());
 
-		return new PageImpl<>(exameDTOS, pageExame.getPageable(), pageExame.getTotalElements());
-	}
+    return new PageImpl<>(exameDTOS, pageExame.getPageable(), pageExame.getTotalElements());
+  }
 
 }
